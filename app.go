@@ -97,7 +97,13 @@ func action(ctx *Context) {
 	trigger := ctx.ParamSingle("trigger_word")
 
 	cmd := NewCommand(text, trigger)
-	res := ctx.actions[cmd.Name](ctx, cmd.Args)
 
+	action, ok := ctx.actions[cmd.Name]
+	if !ok {
+		log.Printf("unknown action name: %s", cmd.Name)
+		return
+	}
+
+	res := action(ctx, cmd.Args)
 	ctx.slackConn.SendMessage(res.Channel, res.Text)
 }
