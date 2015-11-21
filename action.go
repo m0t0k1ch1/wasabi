@@ -1,6 +1,7 @@
 package main
 
-type Action func(*Context, []string) *Response
+type Args []string
+type Action func(*Context, Args) *Response
 
 func NewActionMap() map[string]Action {
 	var actionMap map[string]Action
@@ -9,6 +10,6 @@ func NewActionMap() map[string]Action {
 	return actionMap
 }
 
-func Ping(ctx *Context, args []string) *Response {
+func Ping(ctx *Context, args Args) *Response {
 	return NewResponse(ctx.ParamSingle("channel_name"), "pong")
 }
