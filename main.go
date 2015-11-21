@@ -1,6 +1,11 @@
 package main
 
+import "flag"
+
 func main() {
-	wasabi := New()
+	var confPath = flag.String("conf", "config.tml", "config file path")
+	flag.Parse()
+
+	wasabi := New(*confPath)
 	wasabi.Run()
 }

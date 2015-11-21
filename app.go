@@ -74,10 +74,10 @@ func (wasabi *Wasabi) Run() {
 	manners.Serve(l, wasabi)
 }
 
-func New() *Wasabi {
+func New(confPath string) *Wasabi {
 	wasabi := &Wasabi{
 		Negroni: negroni.Classic(),
-		conf:    NewConfig("config.tml"),
+		conf:    NewConfig(confPath),
 		actions: NewActionMap(),
 	}
 
