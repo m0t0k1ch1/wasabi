@@ -101,9 +101,16 @@ func action(ctx *Context) {
 	action, ok := ctx.actions[cmd.Name]
 	if !ok {
 		log.Printf("unknown action name: %s", cmd.Name)
+		ctx.JSON(http.StatusOK, NewResponse("unknown action name"))
 		return
 	}
 
-	res := action(ctx, cmd.Args)
-	ctx.slackConn.SendMessage(res.Channel, res.Text)
+	res, err := action(ctx, cmd.Args)
+	if err != nil {
+		log.Println(err)
+		ctx.JSON(http.StatusOK, NewResponse(err.Error()))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, res)
 }

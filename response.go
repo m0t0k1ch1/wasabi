@@ -1,15 +1,11 @@
 package main
 
-import "fmt"
-
 type Response struct {
-	Channel string
-	Text    string
+	Text string `json:"text"`
 }
 
-func NewResponse(channel, text string) *Response {
+func NewResponse(text string) *Response {
 	return &Response{
-		Channel: fmt.Sprintf("#%s", channel),
-		Text:    text,
+		Text: text,
 	}
 }
