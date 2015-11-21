@@ -17,10 +17,10 @@ type RedisConfig struct {
 }
 
 func NewConfig(path string) *Config {
-	var cfg Config
-	if _, err := toml.DecodeFile(path, &cfg); err != nil {
+	var conf Config
+	if _, err := toml.DecodeFile(path, &conf); err != nil {
 		log.Fatalf("cannot read %v: %v", path, err)
 	}
 
-	return &cfg
+	return &conf
 }
