@@ -26,8 +26,8 @@ type Wasabi struct {
 }
 
 func (wasabi *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args ksatriya.Args) ksatriya.Ctx {
-	addr := fmt.Sprintf("%s:%s", wasabi.conf.Redis.Host, wasabi.conf.Redis.Port)
-	redisConn, err := redis.Dial("tcp", addr)
+	redisAddr := fmt.Sprintf("%s:%s", wasabi.conf.Redis.Host, wasabi.conf.Redis.Port)
+	redisConn, err := redis.Dial("tcp", redisAddr)
 	if err != nil {
 		log.Fatal(err)
 	}
