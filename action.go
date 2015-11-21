@@ -4,7 +4,7 @@ type Args []string
 type Action func(*Context, Args) *Response
 
 func NewActionMap() map[string]Action {
-	var actionMap map[string]Action
+	actionMap := map[string]Action{}
 	actionMap["ping"] = Ping
 
 	return actionMap
