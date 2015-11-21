@@ -21,8 +21,8 @@ import (
 
 type Wasabi struct {
 	*negroni.Negroni
-	conf    *Config
 	actions map[string]Action
+	conf    *Config
 }
 
 func (wasabi *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args ksatriya.Args) ksatriya.Ctx {
@@ -40,6 +40,7 @@ func (wasabi *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args 
 		redisConn: redisConn,
 		slackConn: slackConn,
 		actions:   wasabi.actions,
+		conf:      wasabi.conf,
 	}
 }
 

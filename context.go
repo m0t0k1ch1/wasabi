@@ -8,16 +8,13 @@ import (
 
 type Context struct {
 	ksatriya.Ctx
+	actions   map[string]Action
+	conf      *Config
 	redisConn redis.Conn
 	slackConn *slackbot.Client
-	actions   map[string]Action
 }
 
 func convertContext(kctx ksatriya.Ctx) *Context {
 	ctx, _ := kctx.(*Context)
 	return ctx
-}
-
-func (ctx *Context) SetupActions() {
-	ctx.actions["ping"] = Ping
 }
