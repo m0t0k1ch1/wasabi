@@ -84,7 +84,7 @@ func New() *Wasabi {
 	k := ksatriya.New()
 	k.SetCtxBuilder(wasabi.NewContext)
 
-	k.GET("/", ActionHandler)
+	k.POST("/", ActionHandler)
 
 	wasabi.UseHandler(k)
 
