@@ -1,15 +1,14 @@
 package main
 
-import (
-	"fmt"
+type Action func(*Context, []string) *Response
 
-	"github.com/m0t0k1ch1/ksatriya"
-)
+func NewActionMap() map[string]Action {
+	var actionMap map[string]Action
+	actionMap["ping"] = Ping
 
-func PingHandler(kctx ksatriya.Ctx) {
-	ping(convertContext(kctx))
+	return actionMap
 }
-func ping(ctx *Context) {
-	channel := fmt.Sprintf("#%s", ctx.ParamSingle("channel_name"))
-	ctx.slackConn.SendMessage(channel, "pong")
+
+func Ping(ctx *Context, args []string) *Response {
+	return NewResponse(ctx.ParamSingle("channel_name"), "pong")
 }

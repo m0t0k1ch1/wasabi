@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"regexp"
+	"strings"
 	"syscall"
 
 	"github.com/braintree/manners"
@@ -19,7 +21,8 @@ import (
 
 type Wasabi struct {
 	*negroni.Negroni
-	conf *Config
+	conf    *Config
+	actions map[string]Action
 }
 
 func (wasabi *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args ksatriya.Args) ksatriya.Ctx {
@@ -36,6 +39,7 @@ func (wasabi *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args 
 		Ctx:       ksatriya.NewContext(w, req, args),
 		redisConn: redisConn,
 		slackConn: slackConn,
+		actions:   wasabi.actions,
 	}
 }
 
@@ -73,14 +77,31 @@ func New() *Wasabi {
 	wasabi := &Wasabi{
 		Negroni: negroni.Classic(),
 		conf:    NewConfig("config.tml"),
+		actions: NewActionMap(),
 	}
 
 	k := ksatriya.New()
 	k.SetCtxBuilder(wasabi.NewContext)
 
-	k.GET("/ping", PingHandler)
+	k.GET("/", ActionHandler)
 
 	wasabi.UseHandler(k)
 
 	return wasabi
+}
+
+func ActionHandler(kctx ksatriya.Ctx) {
+	action(convertContext(kctx))
+}
+func action(ctx *Context) {
+	text := ctx.ParamSingle("text")
+	tw := ctx.ParamSingle("trigger_word")
+
+	pattern := fmt.Sprintf(`^(%s)`, tw)
+	textWithoutTW := regexp.MustCompile(pattern).ReplaceAllString(text, "")
+	args := strings.Split(textWithoutTW, " ")
+
+	res := ctx.actions[args[0]](ctx, args[1:])
+
+	ctx.slackConn.SendMessage(res.Channel, res.Text)
 }
