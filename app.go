@@ -7,8 +7,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"regexp"
-	"strings"
 	"syscall"
 
 	"github.com/braintree/manners"
@@ -96,13 +94,10 @@ func ActionHandler(kctx ksatriya.Ctx) {
 }
 func action(ctx *Context) {
 	text := ctx.ParamSingle("text")
-	tw := ctx.ParamSingle("trigger_word")
+	trigger := ctx.ParamSingle("trigger_word")
 
-	pattern := fmt.Sprintf(`^(%s)`, tw)
-	textWithoutTW := regexp.MustCompile(pattern).ReplaceAllString(text, "")
-	args := strings.Split(textWithoutTW, " ")
-
-	res := ctx.actions[args[0]](ctx, args[1:])
+	cmd := NewCommand(text, trigger)
+	res := ctx.actions[cmd.Name](ctx, cmd.Args)
 
 	ctx.slackConn.SendMessage(res.Channel, res.Text)
 }
