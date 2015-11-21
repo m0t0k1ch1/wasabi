@@ -14,7 +14,6 @@ import (
 	"github.com/garyburd/redigo/redis"
 	"github.com/lestrrat/go-server-starter/listener"
 	"github.com/m0t0k1ch1/ksatriya"
-	"github.com/m0t0k1ch1/slackbot"
 )
 
 type Wasabi struct {
@@ -30,15 +29,11 @@ func (wasabi *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args 
 		log.Fatal(err)
 	}
 
-	slackConn := slackbot.NewClient(wasabi.conf.Slack.Token)
-	slackConn.SetAsUser(true)
-
 	return &Context{
 		Ctx:       ksatriya.NewContext(w, req, args),
-		redisConn: redisConn,
-		slackConn: slackConn,
 		actions:   wasabi.actions,
 		conf:      wasabi.conf,
+		redisConn: redisConn,
 	}
 }
 
