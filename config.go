@@ -9,16 +9,11 @@ import (
 type Config struct {
 	Port  string `toml:"port"`
 	Redis *RedisConfig
-	Slack *SlackConfig
 }
 
 type RedisConfig struct {
 	Host string `toml:"host"`
 	Port string `toml:"port"`
-}
-
-type SlackConfig struct {
-	Token string `toml:"token"`
 }
 
 func NewConfig(path string) *Config {
