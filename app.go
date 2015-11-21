@@ -81,7 +81,6 @@ func New(confPath string) *Wasabi {
 
 	k := ksatriya.New()
 	k.SetCtxBuilder(wasabi.NewContext)
-
 	k.POST("/", ActionHandler)
 
 	wasabi.UseHandler(k)
