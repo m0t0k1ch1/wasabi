@@ -1,0 +1,8 @@
+port = "app port"
+
+[redis]
+host = "redis host"
+port = "redis port"
+
+[slack]
+token = "slack token"
