@@ -4,10 +4,10 @@ import (
 	"github.com/m0t0k1ch1/potto"
 )
 
-func PingAction(pctx potto.Ctx, args potto.Args) (*Response, error) {
-	ctx, _ := convertContext(pctx)
-	return c.Ping(ctx)
+func PingAction(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
+	ctx := convertContext(pctx)
+	return ping(ctx)
 }
-func Ping(ctx *Context) {
+func ping(ctx *Context) (*potto.Response, error) {
 	return potto.NewResponse("pong"), nil
 }
