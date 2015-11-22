@@ -37,7 +37,7 @@ func New(confPath string) *Wasabi {
 	}
 
 	wsb.SetCtxBuilder(wsb.NewContext)
-	wsb.AddAction("ping", PingAction)
+	wsb.AddAction("ping", Ping)
 
 	return wsb
 }
