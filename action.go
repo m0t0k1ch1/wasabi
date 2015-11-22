@@ -1,15 +1,13 @@
 package main
 
-type Args []string
-type Action func(*Context, Args) (*Response, error)
+import (
+	"github.com/m0t0k1ch1/potto"
+)
 
-func NewActionMap() map[string]Action {
-	actionMap := map[string]Action{}
-	actionMap["ping"] = Ping
-
-	return actionMap
+func PingAction(pctx potto.Ctx, args potto.Args) (*Response, error) {
+	ctx, _ := convertContext(pctx)
+	return c.Ping(ctx)
 }
-
-func Ping(ctx *Context, args Args) (*Response, error) {
-	return NewResponse("pong"), nil
+func Ping(ctx *Context) {
+	return potto.NewResponse("pong"), nil
 }

@@ -2,17 +2,16 @@ package main
 
 import (
 	"github.com/garyburd/redigo/redis"
-	"github.com/m0t0k1ch1/ksatriya"
+	"github.com/m0t0k1ch1/potto"
 )
 
 type Context struct {
-	ksatriya.Ctx
-	actions   map[string]Action
+	potto.Ctx
 	conf      *Config
 	redisConn redis.Conn
 }
 
-func convertContext(kctx ksatriya.Ctx) *Context {
-	ctx, _ := kctx.(*Context)
+func convertContext(pctx potto.Ctx) *Context {
+	ctx, _ := pctx.(*Context)
 	return ctx
 }
