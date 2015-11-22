@@ -15,6 +15,8 @@ type Wasabi struct {
 }
 
 func (wsb *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args potto.Args) potto.Ctx {
+	pctx := wsb.Potto.NewContext(w, req, args)
+
 	redisAddr := fmt.Sprintf("%s:%s", wsb.conf.Redis.Host, wsb.conf.Redis.Port)
 	redisConn, err := redis.Dial("tcp", redisAddr)
 	if err != nil {
@@ -22,7 +24,7 @@ func (wsb *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args pot
 	}
 
 	return &Context{
-		Ctx:       wsb.Potto.NewContext(w, req, args),
+		Context:   pctx.(*potto.Context),
 		conf:      wsb.conf,
 		redisConn: redisConn,
 	}

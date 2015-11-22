@@ -6,12 +6,7 @@ import (
 )
 
 type Context struct {
-	potto.Ctx
+	*potto.Context
 	conf      *Config
 	redisConn redis.Conn
-}
-
-func convertContext(pctx potto.Ctx) *Context {
-	ctx, _ := pctx.(*Context)
-	return ctx
 }
