@@ -23,10 +23,10 @@ func main() {
 	n := negroni.Classic()
 	n.UseHandler(wsb)
 
-	run(n)
+	run(n, wsb.conf)
 }
 
-func run(*negroni.Negroni) {
+func run(n *negroni.Negroni, conf *Config) {
 	signalChan := make(chan os.Signal)
 	signal.Notify(signalChan, syscall.SIGTERM)
 	go func() {
@@ -42,7 +42,7 @@ func run(*negroni.Negroni) {
 	listeners, err := listener.ListenAll()
 	if err != nil {
 		if err == listener.ErrNoListeningTarget {
-			l, err = net.Listen("tcp", fmt.Sprintf(":%s", wasabi.conf.Port))
+			l, err = net.Listen("tcp", fmt.Sprintf(":%s", conf.Port))
 			if err != nil {
 				log.Fatal(err)
 			}
