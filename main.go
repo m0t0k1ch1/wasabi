@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -26,7 +27,7 @@ func main() {
 	run(n, wsb.conf)
 }
 
-func run(n *negroni.Negroni, conf *Config) {
+func run(handler http.Handler, conf *Config) {
 	signalChan := make(chan os.Signal)
 	signal.Notify(signalChan, syscall.SIGTERM)
 	go func() {
@@ -53,5 +54,5 @@ func run(n *negroni.Negroni, conf *Config) {
 		l = listeners[0]
 	}
 
-	manners.Serve(l, n)
+	manners.Serve(l, handler)
 }
