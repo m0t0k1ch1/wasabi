@@ -12,6 +12,14 @@ $ go get github.com/m0t0k1ch1/wasabi
 
 ## Run
 
+### start Redis server
+
+``` sh
+$ redis-server
+```
+
+### start wasabi
+
 ``` sh
 $ wasabi --conf=/path/to/your/config.tml
 ```
