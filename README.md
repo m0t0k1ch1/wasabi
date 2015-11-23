@@ -1,5 +1,7 @@
 # wasabi
 
+[![GoDoc](https://godoc.org/github.com/m0t0k1ch1/wasabi?status.svg)](https://godoc.org/github.com/m0t0k1ch1/wasabi)
+
 wasabi sushi :ghost:
 
 ref. [なんでもルーレットしてくれる Slack bot](http://m0t0k1ch1st0ry.com/blog/2015/11/23/wasabi)
