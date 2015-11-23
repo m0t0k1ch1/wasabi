@@ -14,5 +14,14 @@ func show(ctx *Context) (*potto.Response, error) {
 	if err != nil {
 		return errorResponse(err)
 	}
-	return response(strings.Join(members, ", "))
+
+	var text string
+	switch {
+	case len(members) == 0:
+		text = "no member"
+	default:
+		text = strings.Join(members, ", ")
+	}
+
+	return response(text)
 }
