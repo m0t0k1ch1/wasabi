@@ -7,9 +7,7 @@ import (
 )
 
 func Add(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
-	return add(pctx.(*Context), args)
-}
-func add(ctx *Context, args potto.ActionArgs) (*potto.Response, error) {
+	ctx := pctx.(*Context)
 	channelID := ctx.ChannelID()
 
 	totalCount := 0

@@ -7,9 +7,8 @@ import (
 )
 
 func Pick(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
-	return pick(pctx.(*Context))
-}
-func pick(ctx *Context) (*potto.Response, error) {
+	ctx := pctx.(*Context)
+
 	member, err := ctx.redis.SRANDMEMBER(ctx.ChannelID())
 	if err != nil {
 		return errorResponse(err)

@@ -7,9 +7,8 @@ import (
 )
 
 func Show(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
-	return show(pctx.(*Context))
-}
-func show(ctx *Context) (*potto.Response, error) {
+	ctx := pctx.(*Context)
+
 	members, err := ctx.redis.SMEMBERS(ctx.ChannelID())
 	if err != nil {
 		return errorResponse(err)

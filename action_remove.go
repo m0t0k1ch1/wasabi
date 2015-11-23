@@ -7,9 +7,7 @@ import (
 )
 
 func Remove(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
-	return remove(pctx.(*Context), args)
-}
-func remove(ctx *Context, args potto.ActionArgs) (*potto.Response, error) {
+	ctx := pctx.(*Context)
 	channelID := ctx.ChannelID()
 
 	totalCount := 0
