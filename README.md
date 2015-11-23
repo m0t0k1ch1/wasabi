@@ -28,4 +28,4 @@ $ start_server --port 8080 -- wasabi --conf=/path/to/your/config.tml
 * `show`：get all members in a set
 * `add member [member...]`：add one or more members to a set
 * `del member [member...]`：delete one or more members
-* `pick`：get random member from a set
+* `pick`：get one random member from a set
