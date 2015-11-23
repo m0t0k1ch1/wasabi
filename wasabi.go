@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/fukata/golang-stats-api-handler"
 	"github.com/garyburd/redigo/redis"
 	"github.com/m0t0k1ch1/potto"
 )
@@ -37,6 +38,8 @@ func New(confPath string) *Wasabi {
 	}
 
 	wsb.SetCtxBuilder(wsb.NewContext)
+	wsb.AddRoute("GET", "/stats", Stats)
+
 	wsb.AddAction("ping", Ping)
 	wsb.AddAction("init", Initialize)
 	wsb.AddAction("show", Show)
@@ -45,4 +48,8 @@ func New(confPath string) *Wasabi {
 	wsb.AddAction("pick", Pick)
 
 	return wsb
+}
+
+func Stats(pctx potto.Ctx) {
+	pctx.RenderJSON(http.StatusOK, stats_api.GetStats())
 }
