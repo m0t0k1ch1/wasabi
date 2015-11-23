@@ -1,4 +1,5 @@
-port = "app port"
+port  = "app port"
+emoji = ":ghost:"
 
 [redis]
 host = "redis host"

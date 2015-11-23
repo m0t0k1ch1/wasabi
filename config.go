@@ -8,6 +8,7 @@ import (
 
 type Config struct {
 	Port  string `toml:"port"`
+	Emoji string `toml:"emoji"`
 	Redis *RedisConfig
 }
 
