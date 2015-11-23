@@ -24,9 +24,9 @@ func (wsb *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args pot
 	}
 
 	return &Context{
-		Context:   pctx.(*potto.Context),
-		conf:      wsb.conf,
-		redisConn: redisConn,
+		Context: pctx.(*potto.Context),
+		conf:    wsb.conf,
+		redis:   NewRedis(redisConn),
 	}
 }
 
