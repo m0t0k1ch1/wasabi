@@ -9,6 +9,14 @@ import (
 func Pick(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
 	ctx := pctx.(*Context)
 
+	len, err := ctx.redis.SCARD(ctx.ChannelID())
+	if err != nil {
+		return errorResponse(err)
+	}
+	if len == 0 {
+		return response("no member")
+	}
+
 	member, err := ctx.redis.SRANDMEMBER(ctx.ChannelID())
 	if err != nil {
 		return errorResponse(err)

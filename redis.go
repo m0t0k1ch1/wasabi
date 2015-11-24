@@ -6,6 +6,10 @@ type Redis struct {
 	conn redis.Conn
 }
 
+func (r *Redis) SCARD(key string) (int, error) {
+	return redis.Int(r.conn.Do("SCARD", key))
+}
+
 func (r *Redis) SMEMBERS(key string) ([]string, error) {
 	return redis.Strings(r.conn.Do("SMEMBERS", key))
 }
