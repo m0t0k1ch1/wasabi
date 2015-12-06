@@ -3,16 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"net"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 
-	"github.com/braintree/manners"
 	"github.com/codegangsta/negroni"
 	"github.com/lestrrat/go-server-starter/listener"
+	"github.com/shogo82148/go-gracedown"
 )
 
 func main() {
@@ -34,25 +33,25 @@ func run(handler http.Handler, conf *Config) {
 		for {
 			s := <-signalChan
 			if s == syscall.SIGTERM {
-				manners.Close()
+				gracedown.Close()
 			}
 		}
 	}()
 
-	var l net.Listener
 	listeners, err := listener.ListenAll()
-	if err != nil {
-		if err == listener.ErrNoListeningTarget {
-			l, err = net.Listen("tcp", fmt.Sprintf(":%s", conf.Port))
-			if err != nil {
-				log.Fatal(err)
-			}
-		} else {
-			log.Fatal(err)
+	if err != nil && err != listener.ErrNoListeningTarget {
+		panic(err)
+	}
+
+	var l net.Listener
+	if err == listener.ErrNoListeningTarget {
+		l, err = net.Listen("tcp", fmt.Sprintf(":%s", conf.Port))
+		if err != nil {
+			panic(err)
 		}
 	} else {
 		l = listeners[0]
 	}
 
-	manners.Serve(l, handler)
+	gracedown.Serve(l, handler)
 }
