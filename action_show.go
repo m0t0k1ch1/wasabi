@@ -7,9 +7,7 @@ import (
 	"github.com/m0t0k1ch1/potto"
 )
 
-func Show(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
-	ctx := pctx.(*Context)
-
+func Show(ctx *Context, args potto.ActionArgs) (*potto.Response, error) {
 	members, err := ctx.redis.SMEMBERS(ctx.ChannelID())
 	if err != nil {
 		return errorResponse(err)

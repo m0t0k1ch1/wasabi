@@ -6,9 +6,7 @@ import (
 	"github.com/m0t0k1ch1/potto"
 )
 
-func Pick(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
-	ctx := pctx.(*Context)
-
+func Pick(ctx *Context, args potto.ActionArgs) (*potto.Response, error) {
 	len, err := ctx.redis.SCARD(ctx.ChannelID())
 	if err != nil {
 		return errorResponse(err)

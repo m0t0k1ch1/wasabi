@@ -10,9 +10,18 @@ import (
 	"github.com/m0t0k1ch1/potto"
 )
 
+type Action func(*Context, potto.ActionArgs) (*potto.Response, error)
+
 type Wasabi struct {
 	*potto.Potto
 	conf *Config
+}
+
+func (wsb *Wasabi) AddAction(name string, action Action) {
+	wsb.Potto.AddAction(name, func(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
+		ctx := pctx.(*Context)
+		return action(ctx, args)
+	})
 }
 
 func (wsb *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args potto.Args) potto.Ctx {
@@ -41,10 +50,10 @@ func New(confPath string) *Wasabi {
 	wsb.AddRoute("GET", "/stats", Stats)
 
 	wsb.AddAction("ping", Ping)
-	wsb.AddAction("init", Initialize)
+	wsb.AddAction("init", Init)
 	wsb.AddAction("show", Show)
 	wsb.AddAction("add", Add)
-	wsb.AddAction("del", Remove)
+	wsb.AddAction("del", Del)
 	wsb.AddAction("pick", Pick)
 
 	return wsb

@@ -6,8 +6,7 @@ import (
 	"github.com/m0t0k1ch1/potto"
 )
 
-func Add(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
-	ctx := pctx.(*Context)
+func Add(ctx *Context, args potto.ActionArgs) (*potto.Response, error) {
 	channelID := ctx.ChannelID()
 
 	totalCount := 0
