@@ -3,11 +3,9 @@ package main
 import (
 	"fmt"
 	"strings"
-
-	"github.com/m0t0k1ch1/potto"
 )
 
-func Show(ctx *Context, args potto.ActionArgs) (*potto.Response, error) {
+func Show(ctx *Context, args ActionArgs) (*Response, error) {
 	members, err := ctx.redis.SMEMBERS(ctx.ChannelID())
 	if err != nil {
 		return errorResponse(err)

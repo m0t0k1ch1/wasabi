@@ -1,12 +1,8 @@
 package main
 
-import (
-	"fmt"
+import "fmt"
 
-	"github.com/m0t0k1ch1/potto"
-)
-
-func Pick(ctx *Context, args potto.ActionArgs) (*potto.Response, error) {
+func Pick(ctx *Context, args ActionArgs) (*Response, error) {
 	len, err := ctx.redis.SCARD(ctx.ChannelID())
 	if err != nil {
 		return errorResponse(err)

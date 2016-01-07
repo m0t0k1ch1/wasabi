@@ -1,12 +1,8 @@
 package main
 
-import (
-	"fmt"
+import "fmt"
 
-	"github.com/m0t0k1ch1/potto"
-)
-
-func Del(ctx *Context, args potto.ActionArgs) (*potto.Response, error) {
+func Del(ctx *Context, args ActionArgs) (*Response, error) {
 	channelID := ctx.ChannelID()
 
 	totalCount := 0

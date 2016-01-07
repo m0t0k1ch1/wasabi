@@ -10,7 +10,10 @@ import (
 	"github.com/m0t0k1ch1/potto"
 )
 
-type Action func(*Context, potto.ActionArgs) (*potto.Response, error)
+type Action func(*Context, ActionArgs) (*Response, error)
+type ActionArgs struct {
+	potto.ActionArgs
+}
 
 type Wasabi struct {
 	*potto.Potto
@@ -18,9 +21,13 @@ type Wasabi struct {
 }
 
 func (wsb *Wasabi) AddAction(name string, action Action) {
-	wsb.Potto.AddAction(name, func(pctx potto.Ctx, args potto.ActionArgs) (*potto.Response, error) {
+	wsb.Potto.AddAction(name, func(pctx potto.Ctx, pargs potto.ActionArgs) (*potto.Response, error) {
 		ctx := pctx.(*Context)
-		return action(ctx, args)
+		args := ActionArgs{pargs}
+
+		res, err := action(ctx, args)
+
+		return res.Response, err
 	})
 }
 
