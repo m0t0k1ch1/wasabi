@@ -11,9 +11,7 @@ import (
 )
 
 type Action func(*Context, ActionArgs) (*Response, error)
-type ActionArgs struct {
-	potto.ActionArgs
-}
+type ActionArgs potto.ActionArgs
 
 type Wasabi struct {
 	*potto.Potto
@@ -23,7 +21,7 @@ type Wasabi struct {
 func (wsb *Wasabi) AddAction(name string, action Action) {
 	wsb.Potto.AddAction(name, func(pctx potto.Ctx, pargs potto.ActionArgs) (*potto.Response, error) {
 		ctx := pctx.(*Context)
-		args := ActionArgs{pargs}
+		args := ActionArgs(pargs)
 
 		res, err := action(ctx, args)
 
