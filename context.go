@@ -4,8 +4,8 @@ import "github.com/m0t0k1ch1/potto"
 
 type Context struct {
 	*potto.Context
-	conf  *Config
-	redis *Redis
+	Redis *Redis
+	Conf  *Config
 }
 
 func (ctx *Context) ChannelID() string {
@@ -13,5 +13,5 @@ func (ctx *Context) ChannelID() string {
 }
 
 func (ctx *Context) Finalize() {
-	ctx.redis.conn.Close()
+	ctx.Redis.Close()
 }

@@ -8,7 +8,7 @@ func Add(ctx *Context, args ActionArgs) (*Response, error) {
 	totalCount := 0
 	var lastAddedMember string
 	for _, arg := range args {
-		count, err := ctx.redis.SADD(channelID, arg)
+		count, err := ctx.Redis.SADD(channelID, arg)
 		if err != nil {
 			return errorResponse(err)
 		}

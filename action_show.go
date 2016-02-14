@@ -6,7 +6,7 @@ import (
 )
 
 func Show(ctx *Context, args ActionArgs) (*Response, error) {
-	members, err := ctx.redis.SMEMBERS(ctx.ChannelID())
+	members, err := ctx.Redis.SMEMBERS(ctx.ChannelID())
 	if err != nil {
 		return errorResponse(err)
 	}

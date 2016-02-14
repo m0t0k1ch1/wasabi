@@ -23,7 +23,7 @@ func main() {
 	n := negroni.Classic()
 	n.UseHandler(wsb)
 
-	run(n, wsb.conf)
+	run(n, wsb.Conf)
 }
 
 func run(handler http.Handler, conf *Config) {

@@ -30,6 +30,10 @@ func (r *Redis) DEL(key string) (int, error) {
 	return redis.Int(r.conn.Do("DEL", key))
 }
 
+func (r *Redis) Close() {
+	r.conn.Close()
+}
+
 func NewRedis(conn redis.Conn) *Redis {
 	return &Redis{conn}
 }

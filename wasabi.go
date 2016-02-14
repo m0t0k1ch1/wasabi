@@ -15,7 +15,7 @@ type ActionArgs potto.ActionArgs
 
 type Wasabi struct {
 	*potto.Potto
-	conf *Config
+	Conf *Config
 }
 
 func (wsb *Wasabi) AddAction(name string, action Action) {
@@ -32,7 +32,7 @@ func (wsb *Wasabi) AddAction(name string, action Action) {
 func (wsb *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args potto.Args) potto.Ctx {
 	pctx := wsb.Potto.NewContext(w, req, args)
 
-	redisAddr := fmt.Sprintf("%s:%s", wsb.conf.Redis.Host, wsb.conf.Redis.Port)
+	redisAddr := fmt.Sprintf("%s:%s", wsb.Conf.Redis.Host, wsb.Conf.Redis.Port)
 	redisConn, err := redis.Dial("tcp", redisAddr)
 	if err != nil {
 		log.Fatal(err)
@@ -40,15 +40,15 @@ func (wsb *Wasabi) NewContext(w http.ResponseWriter, req *http.Request, args pot
 
 	return &Context{
 		Context: pctx.(*potto.Context),
-		conf:    wsb.conf,
-		redis:   NewRedis(redisConn),
+		Redis:   NewRedis(redisConn),
+		Conf:    wsb.Conf,
 	}
 }
 
 func New(confPath string) *Wasabi {
 	wsb := &Wasabi{
 		Potto: potto.New(),
-		conf:  NewConfig(confPath),
+		Conf:  NewConfig(confPath),
 	}
 
 	wsb.SetCtxBuilder(wsb.NewContext)

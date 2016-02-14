@@ -8,7 +8,7 @@ func Del(ctx *Context, args ActionArgs) (*Response, error) {
 	totalCount := 0
 	var lastDeletedMember string
 	for _, arg := range args {
-		count, err := ctx.redis.SREM(channelID, arg)
+		count, err := ctx.Redis.SREM(channelID, arg)
 		if err != nil {
 			return errorResponse(err)
 		}
